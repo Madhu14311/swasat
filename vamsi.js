@@ -1067,6 +1067,263 @@
 // },
 
 // });
+// import React, { useEffect, useRef, useState } from "react";
+// import {
+//   View,
+//   Text,
+//   StyleSheet,
+//   Dimensions,
+//   TouchableOpacity,
+//   TextInput,
+//   FlatList,
+//   Image,
+// } from "react-native";
+// import Login from './Login';
+
+// const { width, height } = Dimensions.get("window");
+
+// /* ================= ONBOARDING DATA ================= */
+
+// const DATA = [
+
+//     {
+//     title: "Grievance Departments",
+//     image: require("./assets/grev.png"),
+//   },
+//   {
+//     title: "Crime Categories",
+//     image: require("./assets/crim.png"),
+//   },
+
+//   {
+//     title: "Common Problems",
+//     image: require("./assets/prb.png"),
+//   },
+// ];
+
+// export default function App() {
+//   const [screen, setScreen] = useState("title");
+//   const [currentIndex, setCurrentIndex] = useState(0);
+//   const flatListRef = useRef(null);
+
+//   useEffect(() => {
+//     if (screen === "title") {
+//       setTimeout(() => setScreen("onboarding"), 1200);
+//     }
+//   }, [screen]);
+
+//   const handleNext = () => {
+//     if (currentIndex < DATA.length - 1) {
+//       flatListRef.current.scrollToIndex({
+//         index: currentIndex + 1,
+//         animated: true,
+//       });
+//     } else {
+//       setScreen("Login");
+//     }
+//   };
+
+//   return (
+//     <>
+//       {/* ================= TITLE ================= */}
+//       {screen === "title" && (
+//         <View style={styles.center}>
+//           <Text style={styles.titleText}>KNOW YOUR PLACE</Text>
+//         </View>
+//       )}
+
+//       {/* ================= ONBOARDING ================= */}
+//       {screen === "onboarding" && (
+//         <View style={styles.container}>
+//           <TouchableOpacity
+//             style={styles.skipBtn}
+//             onPress={() => setScreen("login")}
+//           >
+//             <Text style={styles.skipText}>Skip</Text>
+//           </TouchableOpacity>
+
+//           <FlatList
+//             ref={flatListRef}
+//             data={DATA}
+//             horizontal
+//             pagingEnabled
+//             showsHorizontalScrollIndicator={false}
+//             keyExtractor={(_, i) => i.toString()}
+//             onMomentumScrollEnd={(e) =>
+//               setCurrentIndex(
+//                 Math.round(e.nativeEvent.contentOffset.x / width)
+//               )
+//             }
+//             renderItem={({ item }) => (
+//               <View style={styles.slide}>
+//                 <Text style={styles.listTitle}>{item.title}</Text>
+//                 <Image
+//                   source={item.image}
+//                   style={styles.image}
+//                   resizeMode="contain"
+//                 />
+//               </View>
+//             )}
+//           />
+
+//           <View style={styles.footer}>
+//             <View style={styles.dots}>
+//               {DATA.map((_, i) => (
+//                 <View
+//                   key={i}
+//                   style={[styles.dot, currentIndex === i && styles.activeDot]}
+//                 />
+//               ))}
+//             </View>
+
+//             <TouchableOpacity style={styles.nextBtn} onPress={handleNext}>
+//               <Text style={styles.nextText}>
+//                 {currentIndex === DATA.length - 1 ? "Done" : "Next"}
+//               </Text>
+//             </TouchableOpacity>
+//           </View>
+//         </View>
+//       )}
+
+//       {/* ================= LOGIN ================= */}
+//       {screen === "Login" && (
+//         <View style={styles.loginContainer}>
+//           <Text style={styles.loginTitle}>Login</Text>
+
+//           <TextInput
+//             placeholder="User ID / Email"
+//             placeholderTextColor="#aaa"
+//             style={styles.input}
+//           />
+//           <TextInput
+//             placeholder="Password"
+//             placeholderTextColor="#aaa"
+//             secureTextEntry
+//             style={styles.input}
+//           />
+//            <TouchableOpacity
+//              style={styles.loginBtn}
+//              onPress={() => {
+//                global.LOGIN_SUCCESS?.();
+//              }}
+//              >
+
+//           {/* <TouchableOpacity style={styles.loginBtn}> */}
+//             <Text style={styles.loginBtnText}>Login</Text>
+//           </TouchableOpacity>
+//         </View>
+//       )}
+//     </>
+//   );
+// }
+
+// /* ================= STYLES ================= */
+
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#0B0F1A",
+//   },
+//   center: {
+//     flex: 1,
+//     backgroundColor: "#0B0F1A",
+//     justifyContent: "center",
+//     alignItems: "center",
+//   },
+//   titleText: {
+//     fontSize: 36,
+//     fontWeight: "900",
+//     color: "#fff",
+//     letterSpacing: 2,
+//   },
+//   skipBtn: {
+//     position: "absolute",
+//     top: 40,
+//     right: 20,
+//     zIndex: 10,
+//   },
+//   skipText: {
+//     color: "#aaa",
+//     fontSize: 16,
+//   },
+//   slide: {
+//     width,
+//     justifyContent: "center",
+//     alignItems: "center",
+//     paddingHorizontal: 20,
+//   },
+//   listTitle: {
+//     color: "#fff",
+//     fontSize: 22,
+//     fontWeight: "800",
+//     marginBottom: 20,
+//     textAlign: "center",
+//   },
+//   image: {
+//     width: width * 0.85,
+//     height: height * 0.45,
+//     borderRadius: 16,
+//   },
+//   footer: {
+//     height: height * 0.22,
+//     alignItems: "center",
+//   },
+//   dots: {
+//     flexDirection: "row",
+//     marginBottom: 18,
+//   },
+//   dot: {
+//     width: 8,
+//     height: 8,
+//     borderRadius: 4,
+//     backgroundColor: "#555",
+//     marginHorizontal: 6,
+//   },
+//   activeDot: {
+//     width: 18,
+//     backgroundColor: "#3D7BFF",
+//   },
+//   nextBtn: {
+//     backgroundColor: "#3D7BFF",
+//     paddingHorizontal: 40,
+//     paddingVertical: 14,
+//     borderRadius: 30,
+//   },
+//   nextText: {
+//     color: "#fff",
+//     fontSize: 16,
+//   },
+//   loginContainer: {
+//     flex: 1,
+//     backgroundColor: "#0B0F1A",
+//     justifyContent: "center",
+//     padding: 20,
+//   },
+//   loginTitle: {
+//     color: "#fff",
+//     fontSize: 28,
+//     textAlign: "center",
+//     marginBottom: 30,
+//   },
+//   input: {
+//     borderWidth: 1,
+//     borderColor: "#3D7BFF",
+//     borderRadius: 10,
+//     padding: 14,
+//     color: "#fff",
+//     marginBottom: 20,
+//   },
+//   loginBtn: {
+//     backgroundColor: "#3D7BFF",
+//     padding: 15,
+//     borderRadius: 10,
+//     alignItems: "center",
+//   },
+//   loginBtnText: {
+//     color: "#fff",
+//     fontSize: 16,
+//   },
+// });
 import React, { useEffect, useRef, useState } from "react";
 import {
   View,
@@ -1074,34 +1331,24 @@ import {
   StyleSheet,
   Dimensions,
   TouchableOpacity,
-  TextInput,
   FlatList,
   Image,
 } from "react-native";
+import Login from "./Login"; // Import your Login component
+import Apps from "./Home";
+import Signup from "./Signup";
 
 const { width, height } = Dimensions.get("window");
 
 /* ================= ONBOARDING DATA ================= */
-
 const DATA = [
-
-    {
-    title: "Grievance Departments",
-    image: require("./assets/grev.png"),
-  },
-  {
-    title: "Crime Categories",
-    image: require("./assets/crim.png"),
-  },
-
-  {
-    title: "Common Problems",
-    image: require("./assets/prb.png"),
-  },
+  { title: "Grievance Departments", image: require("./assets/grev.png") },
+  { title: "Crime Categories", image: require("./assets/crim.png") },
+  { title: "Common Problems", image: require("./assets/prb.png") },
 ];
 
 export default function App() {
-  const [screen, setScreen] = useState("title");
+  const [screen, setScreen] = useState("title"); // title | onboarding | login | home
   const [currentIndex, setCurrentIndex] = useState(0);
   const flatListRef = useRef(null);
 
@@ -1118,7 +1365,7 @@ export default function App() {
         animated: true,
       });
     } else {
-      setScreen("login");
+      setScreen("login"); // Show login after last onboarding screen
     }
   };
 
@@ -1149,9 +1396,7 @@ export default function App() {
             showsHorizontalScrollIndicator={false}
             keyExtractor={(_, i) => i.toString()}
             onMomentumScrollEnd={(e) =>
-              setCurrentIndex(
-                Math.round(e.nativeEvent.contentOffset.x / width)
-              )
+              setCurrentIndex(Math.round(e.nativeEvent.contentOffset.x / width))
             }
             renderItem={({ item }) => (
               <View style={styles.slide}>
@@ -1183,143 +1428,41 @@ export default function App() {
           </View>
         </View>
       )}
+{/* ================= HOME ================= */}
+{screen === "Home" && <Apps />}
 
       {/* ================= LOGIN ================= */}
-      {screen === "login" && (
-        <View style={styles.loginContainer}>
-          <Text style={styles.loginTitle}>Login</Text>
+      {screen === "login" && <Login setPage={setScreen} />}
+      {screen === "signup" && <Signup setPage={setScreen} />}
 
-          <TextInput
-            placeholder="User ID / Email"
-            placeholderTextColor="#aaa"
-            style={styles.input}
-          />
-          <TextInput
-            placeholder="Password"
-            placeholderTextColor="#aaa"
-            secureTextEntry
-            style={styles.input}
-          />
-           <TouchableOpacity
-             style={styles.loginBtn}
-             onPress={() => {
-               global.LOGIN_SUCCESS?.();
-             }}
-             >
-
-          {/* <TouchableOpacity style={styles.loginBtn}> */}
-            <Text style={styles.loginBtnText}>Login</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+      {/* ================= HOME ================= */}
+      
+      
+        
+  
     </>
   );
 }
 
 /* ================= STYLES ================= */
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#0B0F1A",
-  },
-  center: {
-    flex: 1,
-    backgroundColor: "#0B0F1A",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  titleText: {
-    fontSize: 36,
-    fontWeight: "900",
-    color: "#fff",
-    letterSpacing: 2,
-  },
-  skipBtn: {
-    position: "absolute",
-    top: 40,
-    right: 20,
-    zIndex: 10,
-  },
-  skipText: {
-    color: "#aaa",
-    fontSize: 16,
-  },
-  slide: {
-    width,
-    justifyContent: "center",
-    alignItems: "center",
-    paddingHorizontal: 20,
-  },
-  listTitle: {
-    color: "#fff",
-    fontSize: 22,
-    fontWeight: "800",
-    marginBottom: 20,
-    textAlign: "center",
-  },
-  image: {
-    width: width * 0.85,
-    height: height * 0.45,
-    borderRadius: 16,
-  },
-  footer: {
-    height: height * 0.22,
-    alignItems: "center",
-  },
-  dots: {
-    flexDirection: "row",
-    marginBottom: 18,
-  },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: "#555",
-    marginHorizontal: 6,
-  },
-  activeDot: {
-    width: 18,
-    backgroundColor: "#3D7BFF",
-  },
-  nextBtn: {
-    backgroundColor: "#3D7BFF",
-    paddingHorizontal: 40,
-    paddingVertical: 14,
-    borderRadius: 30,
-  },
-  nextText: {
-    color: "#fff",
-    fontSize: 16,
-  },
-  loginContainer: {
-    flex: 1,
-    backgroundColor: "#0B0F1A",
-    justifyContent: "center",
-    padding: 20,
-  },
-  loginTitle: {
-    color: "#fff",
-    fontSize: 28,
-    textAlign: "center",
-    marginBottom: 30,
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: "#3D7BFF",
-    borderRadius: 10,
-    padding: 14,
-    color: "#fff",
-    marginBottom: 20,
-  },
-  loginBtn: {
-    backgroundColor: "#3D7BFF",
-    padding: 15,
-    borderRadius: 10,
-    alignItems: "center",
-  },
-  loginBtnText: {
-    color: "#fff",
-    fontSize: 16,
-  },
+  container: { flex: 1, backgroundColor: "#0B0F1A" },
+  center: { flex: 1, backgroundColor: "#0B0F1A", justifyContent: "center", alignItems: "center" },
+  titleText: { fontSize: 36, fontWeight: "900", color: "#fff", letterSpacing: 2 },
+  skipBtn: { position: "absolute", top: 40, right: 20, zIndex: 10 },
+  skipText: { color: "#aaa", fontSize: 16 },
+  slide: { width, justifyContent: "center", alignItems: "center", paddingHorizontal: 20 },
+  listTitle: { color: "#fff", fontSize: 22, fontWeight: "800", marginBottom: 20, textAlign: "center" },
+  image: { width: width * 0.85, height: height * 0.45, borderRadius: 16 },
+  footer: { height: height * 0.22, alignItems: "center" },
+  dots: { flexDirection: "row", marginBottom: 18 },
+  dot: { width: 8, height: 8, borderRadius: 4, backgroundColor: "#555", marginHorizontal: 6 },
+  activeDot: { width: 18, backgroundColor: "#3D7BFF" },
+  nextBtn: { backgroundColor: "#3D7BFF", paddingHorizontal: 40, paddingVertical: 14, borderRadius: 30 },
+  nextText: { color: "#fff", fontSize: 16 },
+
+  homeContainer: { flex: 1, justifyContent: "center", alignItems: "center", backgroundColor: "#0B0F1A" },
+  homeTitle: { color: "#fff", fontSize: 26, fontWeight: "bold", marginBottom: 30 },
+  logoutBtn: { backgroundColor: "#3D7BFF", padding: 14, borderRadius: 12 },
+  logoutText: { color: "#fff", fontSize: 16 },
 });

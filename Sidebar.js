@@ -129,7 +129,7 @@ import { Ionicons } from '@expo/vector-icons';
 import GrievanceStatus from './GrievanceStatus';
  
 const menu = [
-  //  { name: 'Dashboard', icon: 'home' },
+
   {name : 'All Grievances', icon: 'book'},
   {name: 'Manage Grievance', icon:'construct'},
   {name: 'Assign Grievance', icon:'person'},

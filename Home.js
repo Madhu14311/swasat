@@ -18,6 +18,8 @@ import {
   Animated,
   ScrollView,
 } from 'react-native';
+import { useWindowDimensions } from 'react-native';
+
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { LinearGradient } from 'expo-linear-gradient';
 import * as ImagePicker from 'expo-image-picker';
@@ -35,6 +37,7 @@ import Servicess from './Servicess';
 
 /* ================= ICON ASSETS ================= */
 const welcomeBg = require('./assets/media.png');
+const dashboardIcon = require('./assets/dash.png');
 
 const payBillsIcon = require('./assets/wallet_4874805.png');
 const applyIdIcon = require('./assets/profile_965888.png');
@@ -243,8 +246,9 @@ const NavBtn = ({ icon, label, onPress }) => (
 
 /* ================= HOME SCREEN ================= */
 function HomeScreen({ theme, setPage }) {
+    const { width, height } = useWindowDimensions();
   const actions = [
-      { title: 'Dashboard', image: homeIcon, page: 'Dashboard' },
+      { title: 'Dashboard', image:dashboardIcon , page: 'Dashboard' },
     { title: 'Post a Grievance', image: reportIssueIcon, page: 'Grievance' }, // icon fixed
     { title: 'Post a Crime', image: applyIdIcon, page: 'Crime' },
     { title: 'Post a Problem', image: trackStatusIcon, page: 'Problem' },
@@ -256,10 +260,11 @@ function HomeScreen({ theme, setPage }) {
   image: payBillsIcon,
   page: 'ReportIssue',
 },
+ { title:'Bills & Payments', image: servicesIcon, page: 'Dashboard' },
 
-    { title: 'About', image: profileIcon, page: 'About' },
+    { title: 'About Us', image: profileIcon, page: 'About' },
    
-    { title: 'More...', image: servicesIcon, page: 'Dashboard' },
+   
   ];
 
   return (
@@ -268,16 +273,7 @@ function HomeScreen({ theme, setPage }) {
   contentContainerStyle={{ paddingBottom: 100 }}
 >
 
-      {/* <LinearGradient
-        colors={theme}
-        style={[styles.headerTab, { borderRadius: 20 }]}
-      >
-        <Text style={styles.headerTitle}>KNOW YOUR PLACE...</Text>
-        <TouchableOpacity onPress={() => setPage("Notifications")}>
-          <Image source={notificationIcon} style={styles.notificationIcon} />
-          <View style={styles.notificationBadge} />
-        </TouchableOpacity>
-      </LinearGradient> */}
+     
      <LinearGradient
   colors={theme}
   style={[styles.headerTab, { borderRadius: 20 }]}
@@ -348,32 +344,27 @@ function HomeScreen({ theme, setPage }) {
             {borderRadius: 24 }
           ]}
         >
-          <Image
-            source={a.image}
-            style={[
-              styles.buttonIcon,
-              isDashboard && { marginRight: 0, marginBottom: 6 },
-            ]}
-          />
-          {/* <Text
-            style={[
-              styles.buttonText,
-              isDashboard && { fontSize: 18, fontWeight: "bold" },
-            ]}
-          >
-            {a.title}
-          </Text> */}
-          <View style={{ alignItems: 'center' }}>
-  <Text style={styles.buttonText}>
+  <Image source={a.image} style={styles.buttonIcon} />
+
+<View style={styles.textWrap}>
+  <Text
+    style={styles.buttonText}
+    numberOfLines={2}
+    ellipsizeMode="tail"
+  >
     {a.title}
   </Text>
 
   {a.subtitle && (
-    <Text style={styles.smallSubText}>
+    <Text
+      style={styles.smallSubText}
+      numberOfLines={1}
+    >
       {a.subtitle}
     </Text>
   )}
 </View>
+
 
         </LinearGradient>
       </TouchableOpacity>
@@ -640,7 +631,9 @@ function NotificationsScreen({ theme, setPage }) {
 /* ================= STYLES ================= */
 const styles = StyleSheet.create({
   headerTab: {
-    margin: 30,
+     marginHorizontal: 16,
+  marginTop: 20,
+  marginBottom: 16,
     borderRadius: 28,
     padding: 24,
     flexDirection: "row",
@@ -659,7 +652,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
 
-  welcomeTab: { margin: 1, height: 220 },
+  // welcomeTab: { margin: 1, height: 220 },
+  welcomeTab: {
+  width: '100%',
+  aspectRatio: 1.8,   // responsive height
+},
   welcomeOverlay: {
     backgroundColor: "rgba(0,0,0,0.3)",
     padding: 25,
@@ -686,9 +683,10 @@ actionsContainer: {
 
 dashboardButton: {
   width: "100%",
-  height: 90,
+  aspectRatio: 4.5,
   marginBottom: 16,
 },
+
 
 dashboardInner: {
   flexDirection: "column",
@@ -698,10 +696,11 @@ dashboardInner: {
 
   // actionButton: { width: (width - 50) / 2, height: 80, marginBottom: 14 },
 actionButton: {
-  width: (width - 50) / 2,
-  height: 80,
-  marginBottom: 16,  
-  borderRadius:24,
+ 
+    width: '48%',          // responsive grid
+  aspectRatio: 2.2,     // auto height based on width
+  marginBottom: 16,
+  borderRadius: 24,
 
 },
 
@@ -713,13 +712,14 @@ actionButton: {
     justifyContent: "center",
     borderRadius:24,
   },
-  buttonIcon: { width: 32, height: 32, marginRight: 10 },
-  buttonText: { color: "#fff", fontSize: 16,  marginLeft:-5},
+  buttonIcon: { width: 32, height: 32, marginRight:12 },
+  // buttonText: { color: "#fff", fontSize: 16,  marginLeft:-5},
 
   bottomNav: {
     flexDirection: "row",
     justifyContent: "space-around",
-    paddingVertical: 8,
+  paddingVertical: 10,
+  paddingBottom: 12,
     backgroundColor: "#fff",
   },
   navItem: { alignItems: "center" },
@@ -830,14 +830,28 @@ actionButton: {
     color: "#fff",
     fontWeight: "600",
   },
-  smallSubText: {
-  color: 'rgba(255,255,255,0.65)', // light text
-  fontSize: 11,                  // smaller than title
-  marginTop: 5,
-  fontWeight: '400',
-  letterSpacing: 0.5,
-  marginRight:8,
+
+textWrap: {
+  alignItems: 'center',
+  justifyContent: 'center',
+  paddingHorizontal: 6,
 },
+
+buttonText: {
+  color: "#fff",
+  fontSize: 15,
+  textAlign: 'center',
+  fontWeight: '600',
+  marginLeft:-20,
+},
+
+smallSubText: {
+  color: 'rgba(255,255,255,0.7)',
+  fontSize: 11,
+  marginTop: 2,
+  textAlign: 'center',
+},
+
 
  
 
